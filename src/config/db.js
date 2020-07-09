@@ -15,7 +15,7 @@ try {
 }
 
 mongoose.connection.on("connected", () => {
-  console.log(`connected to database ${DB_URL}`);
+  console.log(`connected to database ${process.env.DB_URL}`);
 });
 
 // To Remove moongoose depreciation warnings
