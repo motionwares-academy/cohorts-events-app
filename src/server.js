@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import "./config/db";
+// This is the index.js file inside the routes folder
 import routes from "./apis/routes";
 
 dotenv.config();
