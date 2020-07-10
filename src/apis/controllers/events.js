@@ -105,5 +105,44 @@ export default {
     } catch (err) {
       res.json({ msg: err });
     }
+  },
+
+  // View all events booked by a single user
+  viewPersonalBookedEvents: async (req, res, next) => {
+    try {
+      const bookedEvents = await Event.find({
+        _id: req.user.events_register_for
+      });
+
+      if (!bookedEvents.length === 0) {
+        return res.json({ msg: "You have not registered for any events" });
+      }
+
+      res.json({
+        events: bookedEvents
+      });
+    } catch (err) {
+      res.json({ msg: err });
+    }
+  },
+
+  // View users who registered for a single events
+  viewRegisteredUsers: async (req, res, next) => {
+    try {
+      const findEvent = await Event.findById(req.params.eventId).populate({
+        path: "registered_users",
+        select: "full_name phone_number"
+      });
+
+      if (!findEvent) {
+        return res.json({ msg: "Event not found" });
+      }
+
+      res.json({
+        events: findEvent
+      });
+    } catch (err) {
+      res.json({ msg: err });
+    }
   }
 };

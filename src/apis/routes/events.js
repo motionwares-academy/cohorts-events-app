@@ -9,5 +9,7 @@ router.post("/create-event", auth, events.createEvent);
 router.get("/view-personal-events", auth, events.viewPersonalEvents);
 router.post("book-event/:eventId", auth, events.bookEvent);
 router.post("/cancel-booking/:eventId", auth, events.cancelBooking);
+router.get("/view_booked_events", auth, events.viewPersonalBookedEvents);
+router.get("/registered_users/:eventId", auth, events.viewRegisteredUsers);
 
 export { router as eventsRouter };
