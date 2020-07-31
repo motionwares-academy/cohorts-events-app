@@ -14,6 +14,15 @@ app.use(express.json());
 app.use(cors());
 routes(app);
 
+app.get("/testing", (req, res, next) => {
+  res.json({ msg: "Deployed to gloud successfully" });
+});
+
+app.post("/test", (req, res, next) => {
+  const { full_name } = req.body;
+  res.json({ msg: `Hello ${full_name}` });
+});
+
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
