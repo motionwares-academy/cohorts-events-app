@@ -13,6 +13,9 @@ const EventSchema = new Schema({
   category: {
     type: String
   },
+  avatar: {
+    type: String
+  },
   created_by: {
     type: Schema.Types.ObjectId,
     ref: "User"

@@ -8,28 +8,55 @@ dotenv.config();
 export default {
   createEvent: async (req, res, next) => {
     try {
-      const newEvent = new Event({
-        name: req.body.name,
-        price: req.body.price,
-        date: req.body.date,
-        category: req.body.category,
-        created_by: req.user._id
-      });
+      console.log(req.file);
 
-      const savedEvent = await newEvent.save();
+      if (req.file) {
+        const newEvent = new Event({
+          name: req.body.name,
+          price: req.body.price,
+          date: req.body.date,
+          category: req.body.category,
+          avatar: req.file.path,
+          created_by: req.user._id
+        });
 
-      await User.findByIdAndUpdate(
-        req.user._id,
-        { $push: { events_created: savedEvent._id } },
-        { new: true }
-      );
+        const savedEvent = await newEvent.save();
 
-      res.json({
-        msg: "Event created succesfully",
-        event: savedEvent
-      });
+        await User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { events_created: savedEvent._id } },
+          { new: true }
+        );
+
+        return res.json({
+          msg: "Event created succesfully",
+          event: savedEvent
+        });
+      } else {
+        const newEvent = new Event({
+          name: req.body.name,
+          price: req.body.price,
+          date: req.body.date,
+          category: req.body.category,
+          created_by: req.user._id
+        });
+
+        const savedEvent = await newEvent.save();
+
+        await User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { events_created: savedEvent._id } },
+          { new: true }
+        );
+
+        return res.json({
+          msg: "Event created succesfully",
+          event: savedEvent
+        });
+      }
     } catch (err) {
-      res.json({ msg: err });
+      // res.json({ msg: err });
+      throw err;
     }
   },
 
